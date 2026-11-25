@@ -1,0 +1,2471 @@
+/* ==========================================================================
+   AL RIHAN PERFUMES - OFFICIAL ADMIN PANEL STYLESHEET
+   File: al-rihan-admin.css
+   Includes:
+   - Luxury Dark Arabian Mocha & Amber Gold Theme
+   - Expanded Sidebar & Sidenav Navigation Styling
+   - Standardized Table, Badge, Button, & Pagination Components
+   - Centralized Styles Migrated from All Admin Blade Templates
+   ========================================================================== */
+/* ==========================================================================
+   AL RIHAN PERFUMES - LUXURY ADMIN PANEL THEME
+   Follows Brand Aesthetic:
+   - Primary: #3A2619 (Rich Dark Arabian Mocha / Bronze)
+   - Secondary / Accent: #B3804A (Warm Amber Gold)
+   - Ivory / White Clean Sidebar with Champagne Active Accents
+   - Header & Dashboard Heading Styling
+   ========================================================================== */
+
+:root,
+[data-bs-theme="light"],
+[data-bs-theme="dark"],
+body.watch-admin,
+body.alrihan-admin {
+    /* Al Rihan Brand Colors */
+    --theme-primary: #3A2619 !important;
+    --theme-primary-rgb: 58, 38, 25 !important;
+    --brand-primary: #3A2619 !important;
+    --brand-gold: #B3804A !important;
+    --brand-gold-rgb: 179, 128, 74 !important;
+    --brand-cream: #F7F3EC !important;
+    --brand-border: #EDE4D8 !important;
+
+    /* Authentic Green for Success States */
+    --bs-success: #198754 !important;
+    --bs-success-rgb: 25, 135, 84 !important;
+    --bs-success-text-emphasis: #0f5132 !important;
+    --bs-success-bg-subtle: #d1e7dd !important;
+    --bs-success-border-subtle: #badbcc !important;
+
+    /* Sidenav Width - 325px to ensure long CMS submenu items fit cleanly without truncation */
+    --theme-sidenav-width: 325px !important;
+}
+
+/* Ensure expanded sidebar, topbar, and main page content align properly with the widened sidebar */
+:root,
+html,
+body,
+body.watch-admin,
+body.alrihan-admin {
+    --theme-sidenav-width: 325px !important;
+}
+
+@media (min-width: 768px) {
+
+    :root,
+    html,
+    body,
+    body.watch-admin,
+    body.alrihan-admin {
+        --theme-sidenav-width: 325px !important;
+    }
+
+    html:not([data-sidenav-size="condensed"]):not([data-sidenav-size="compact"]) .sidenav-menu,
+    body:not([data-sidenav-size="condensed"]):not([data-sidenav-size="compact"]) .sidenav-menu,
+    .wrapper .sidenav-menu {
+        width: 325px !important;
+        min-width: 325px !important;
+        max-width: 325px !important;
+    }
+
+    html:not([data-sidenav-size="condensed"]):not([data-sidenav-size="compact"]) .app-topbar,
+    body:not([data-sidenav-size="condensed"]):not([data-sidenav-size="compact"]) .app-topbar {
+        margin-inline-start: 325px !important;
+        -webkit-margin-start: 325px !important;
+    }
+
+    html:not([data-sidenav-size="condensed"]):not([data-sidenav-size="compact"]) .content-page,
+    body:not([data-sidenav-size="condensed"]):not([data-sidenav-size="compact"]) .content-page {
+        margin-inline-start: 325px !important;
+        -webkit-margin-start: 325px !important;
+    }
+}
+
+/* ==========================================================================
+   1. WHITE SIDEBAR STYLING
+   ========================================================================== */
+.sidenav-menu,
+.wrapper .sidenav-menu,
+html[data-menu-color="light"] .sidenav-menu,
+html[data-menu-color="dark"] .sidenav-menu,
+body .sidenav-menu {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    border-right: 1px solid #ECE4D9 !important;
+    box-shadow: 0 4px 18px rgba(58, 38, 25, 0.04) !important;
+}
+
+/* Sidebar Logo Header */
+.sidenav-menu .logo,
+.sidenav-menu .logo-light,
+.sidenav-menu .logo-dark {
+    background-color: #FFFFFF !important;
+    border-bottom: 1px solid #F2ECE3 !important;
+    padding: 1rem 0 !important;
+}
+
+.sidenav-menu .logo img {
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05));
+    transition: transform 0.25s ease;
+}
+
+.sidenav-menu .logo:hover img {
+    transform: scale(1.02);
+}
+
+/* User Profile Box in Sidebar */
+.sidenav-menu #user-profile-settings.sidenav-user {
+    background-color: #FAF6F0 !important;
+    background-image: none !important;
+    border: 1px solid #ECE4D9 !important;
+    border-radius: 10px !important;
+    margin: 12px 14px !important;
+    padding: 12px 14px !important;
+}
+
+.sidenav-menu .sidenav-user-name {
+    color: #3A2619 !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+}
+
+.sidenav-menu [data-lang="user-role"] {
+    color: #B3804A !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    font-size: 0.72rem !important;
+}
+
+.sidenav-menu .sidenav-user-set-icon i {
+    color: #7A563C !important;
+}
+
+/* Sidenav Navigation Links */
+.sidenav-menu .side-nav .side-nav-item>a,
+.sidenav-menu .side-nav .side-nav-link {
+    color: #2E211A !important;
+    font-weight: 500 !important;
+    font-size: 0.92rem !important;
+    padding: 10px 14px !important;
+    margin: 3px 8px !important;
+    border-radius: 10px !important;
+    transition: all 0.2s ease-in-out !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Menu Icons */
+.sidenav-menu .side-nav .menu-icon i,
+.sidenav-menu .side-nav .side-nav-link i,
+.sidenav-menu .side-nav .side-nav-link .menu-icon {
+    color: #3E2B22 !important;
+    font-size: 1.15rem !important;
+    transition: color 0.2s ease, transform 0.2s ease !important;
+}
+
+/* Menu Text */
+.sidenav-menu .side-nav .menu-text {
+    color: #2E211A !important;
+}
+
+/* Menu Arrow */
+.sidenav-menu .side-nav .menu-arrow {
+    color: #9C7A5E !important;
+}
+
+/* Hover State */
+.sidenav-menu .side-nav .side-nav-item>a:hover,
+.sidenav-menu .side-nav .side-nav-link:hover {
+    background-color: #F8F3EC !important;
+    color: #241A10 !important;
+}
+
+.sidenav-menu .side-nav .side-nav-item>a:hover .menu-icon i,
+.sidenav-menu .side-nav .side-nav-link:hover i {
+    color: #B3804A !important;
+    transform: translateX(2px);
+}
+
+/* Active State (Solid dark mocha pill matching exact mockup) */
+.sidenav-menu .side-nav .side-nav-item.active>a,
+.sidenav-menu .side-nav .side-nav-link.active,
+body.watch-admin .side-nav .side-nav-item.active>a,
+body.alrihan-admin .side-nav .side-nav-item.active>a {
+    background: #351F14 !important;
+    background-color: #351F14 !important;
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    border-left: none !important;
+    box-shadow: 0 4px 14px rgba(53, 31, 20, 0.2) !important;
+}
+
+.sidenav-menu .side-nav .side-nav-item.active>a .menu-icon,
+.sidenav-menu .side-nav .side-nav-item.active>a .menu-icon i,
+.sidenav-menu .side-nav .side-nav-link.active i,
+body.watch-admin .side-nav .side-nav-item.active>a .menu-icon,
+body.alrihan-admin .side-nav .side-nav-item.active>a .menu-icon {
+    color: #FFFFFF !important;
+}
+
+.sidenav-menu .side-nav .side-nav-item.active>a .menu-text,
+.sidenav-menu .side-nav .side-nav-link.active .menu-text {
+    color: #FFFFFF !important;
+}
+
+/* Sub-Menu Dropdown on White Sidebar */
+.sidenav-menu .sub-menu {
+    background-color: #FAF6F0 !important;
+    border-radius: 8px !important;
+    margin: 4px 8px !important;
+    padding: 6px 6px !important;
+    border: 1px solid #F0E8DC !important;
+    box-sizing: border-box !important;
+    width: calc(100% - 16px) !important;
+}
+
+.sidenav-menu .sub-menu li a {
+    color: #553F2F !important;
+    font-size: 0.82rem !important;
+    padding: 7px 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    border-radius: 6px !important;
+    transition: all 0.15s ease !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+}
+
+.sidenav-menu .sub-menu li a:hover {
+    color: #241A10 !important;
+    background-color: #F2E8DC !important;
+}
+
+.sidenav-menu .sub-menu li.active>a,
+.sidenav-menu .sub-menu li a.active {
+    color: #B3804A !important;
+    font-weight: 700 !important;
+    background-color: #EFE4D6 !important;
+}
+
+.sidenav-menu .sub-menu li a i {
+    color: #9C7A5E !important;
+    font-size: 0.90rem !important;
+    flex-shrink: 0 !important;
+    margin-right: 6px !important;
+}
+
+.sidenav-menu .sub-menu li a:hover i,
+.sidenav-menu .sub-menu li.active>a i,
+.sidenav-menu .sub-menu li a.active i {
+    color: #B3804A !important;
+}
+
+/* Ensure flyout submenu in condensed mode also has ample width */
+html[data-sidenav-size="condensed"] .sidenav-menu .side-nav .side-nav-item:hover>.collapse>.sub-menu,
+html[data-sidenav-size="condensed"] .sidenav-menu .side-nav .side-nav-item:hover>.collapsing>.sub-menu {
+    width: 290px !important;
+    min-width: 290px !important;
+    box-shadow: 0 8px 24px rgba(58, 38, 25, 0.12) !important;
+    border: 1px solid #E6D8C8 !important;
+}
+
+/* ==========================================================================
+   2. TOPBAR / HEADER STYLING
+   ========================================================================== */
+.app-topbar,
+html[data-topbar-color="light"] .app-topbar,
+body .app-topbar {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    border-bottom: 1px solid #ECE4D9 !important;
+    box-shadow: 0 2px 10px rgba(58, 38, 25, 0.03) !important;
+}
+
+.app-topbar .sidenav-toggle-button,
+.app-topbar .topnav-toggle-button {
+    background-color: #3A2619 !important;
+    border-color: #3A2619 !important;
+    color: #FFFFFF !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+}
+
+.app-topbar .sidenav-toggle-button:hover,
+.app-topbar .topnav-toggle-button:hover {
+    background-color: #B3804A !important;
+    border-color: #B3804A !important;
+    color: #FFFFFF !important;
+}
+
+.app-topbar .topbar-link {
+    color: #3A2619 !important;
+}
+
+.app-topbar .topbar-link:hover {
+    color: #B3804A !important;
+}
+
+.app-topbar .pro-username {
+    color: #3A2619 !important;
+    font-weight: 600 !important;
+}
+
+.app-topbar .nav-user .bg-primary {
+    background-color: #3A2619 !important;
+    background: linear-gradient(135deg, #3A2619 0%, #5A3E2A 100%) !important;
+}
+
+/* ==========================================================================
+   3. BRAND HEADINGS & CONTENT LAYOUT
+   ========================================================================== */
+.content-page,
+.wrapper .content-page {
+    background-color: #FAF7F2 !important;
+}
+
+.page-main-title {
+    color: #3A2619 !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.01em !important;
+}
+
+.breadcrumb-item a {
+    color: #B3804A !important;
+    text-decoration: none !important;
+}
+
+.breadcrumb-item.active {
+    color: #3A2619 !important;
+    font-weight: 600 !important;
+}
+
+/* Card Luxury Styling */
+.card {
+    border-color: #EDE4D8 !important;
+    box-shadow: 0 2px 12px rgba(58, 38, 25, 0.04) !important;
+    background-color: #FFFFFF !important;
+}
+
+.card-header {
+    border-bottom: 1px solid #F0E8DC !important;
+    background-color: #FFFFFF !important;
+}
+
+.card-title {
+    color: #3A2619 !important;
+    font-weight: 700 !important;
+}
+
+/* Al Rihan Primary Buttons */
+.btn-primary {
+    background-color: #3A2619 !important;
+    border-color: #3A2619 !important;
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #B3804A !important;
+    border-color: #B3804A !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 12px rgba(179, 128, 74, 0.25) !important;
+}
+
+.btn-outline-primary {
+    color: #3A2619 !important;
+    border-color: #3A2619 !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #3A2619 !important;
+    border-color: #3A2619 !important;
+    color: #FFFFFF !important;
+}
+
+/* Gold / Accent Buttons */
+.btn-gold,
+.btn-warning {
+    background-color: #B3804A !important;
+    border-color: #B3804A !important;
+    color: #FFFFFF !important;
+}
+
+.btn-gold:hover,
+.btn-warning:hover {
+    background-color: #8C5A32 !important;
+    border-color: #8C5A32 !important;
+    color: #FFFFFF !important;
+}
+
+/* Form Controls Focus */
+.form-control:focus,
+.form-select:focus {
+    border-color: #B3804A !important;
+    box-shadow: 0 0 0 0.2rem rgba(179, 128, 74, 0.2) !important;
+}
+
+/* Badges */
+.badge.bg-primary,
+.badge.text-bg-primary {
+    background-color: #3A2619 !important;
+    color: #FFFFFF !important;
+}
+
+.badge-gold,
+.badge.badge-soft-primary,
+.badge.bg-primary-subtle {
+    background-color: #F7EFE6 !important;
+    color: #3A2619 !important;
+    border: 1px solid rgba(179, 128, 74, 0.3) !important;
+}
+
+/* Specific Total badge style */
+.badge-total-red {
+    background-color: #F7EFE6 !important;
+    color: #3A2619 !important;
+    border: 1px solid rgba(179, 128, 74, 0.3) !important;
+}
+
+/* Pagination */
+.pagination .page-item.active .page-link {
+    background-color: #3A2619 !important;
+    border-color: #3A2619 !important;
+    color: #FFFFFF !important;
+}
+
+.pagination .page-link {
+    color: #3A2619 !important;
+}
+
+.pagination .page-link:hover {
+    color: #B3804A !important;
+    background-color: #F8F3EC !important;
+}
+
+/* ==========================================================================
+   4. SWEETALERT2 POPUPS - CLEAN SUCCESS
+   ========================================================================== */
+.swal2-icon.swal2-success {
+    border-color: #198754 !important;
+    color: #198754 !important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+    background-color: #198754 !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+    border: .25em solid #198754 !important;
+    border-color: #198754 !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-fix {
+    background-color: transparent !important;
+}
+
+.swal2-styled.swal2-confirm {
+    background-color: #3A2619 !important;
+    border-color: #3A2619 !important;
+}
+
+.swal2-styled.swal2-confirm:hover {
+    background-color: #B3804A !important;
+    border-color: #B3804A !important;
+}
+
+/* ==========================================================================
+   5. SUCCESS ALERTS & ACTIVE STATUS BADGES - CLEAN GREEN
+   ========================================================================== */
+.alert-success {
+    background-color: #d1e7dd !important;
+    border-color: #badbcc !important;
+    color: #0f5132 !important;
+}
+
+.alert-success i,
+.alert-success .fas,
+.alert-success .ti {
+    color: #0f5132 !important;
+}
+
+.badge.bg-success-subtle.text-success,
+.badge.badge-soft-success,
+.text-bg-success {
+    background-color: #d1e7dd !important;
+    color: #0f5132 !important;
+    border: 1px solid #badbcc !important;
+}
+
+.text-success {
+    color: #198754 !important;
+}
+
+.bg-success {
+    background-color: #198754 !important;
+    color: #ffffff !important;
+}
+
+.btn-success {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+    color: #ffffff !important;
+}
+
+.btn-success:hover {
+    background-color: #157347 !important;
+    border-color: #146c43 !important;
+}
+
+.form-check-input:checked {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+}
+
+/* ==========================================================================
+   6. LUXURY AL RIHAN DASHBOARD LAYOUT & STAT CARDS (EXACT DESIGN MATCH)
+   ========================================================================== */
+
+.content-page,
+.wrapper .content-page {
+    background-color: #FAF7F2 !important;
+    background: #FAF7F2 !important;
+    background-image: none !important;
+}
+
+/* Page Title with Mocha Accent Bar */
+.luxury-page-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.luxury-title-bar {
+    width: 4px;
+    height: 22px;
+    background: #8C5A32;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.luxury-main-title {
+    color: #20140D !important;
+    font-size: 19px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.01em !important;
+    margin: 0 !important;
+}
+
+/* Stat Cards */
+.luxury-stat-card {
+    background: #FFFFFF !important;
+    border: 1px solid #ECE3D7 !important;
+    border-radius: 18px !important;
+    box-shadow: 0 4px 18px rgba(58, 38, 25, 0.04) !important;
+    padding: 18px 20px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    min-height: 124px !important;
+    display: flex !important;
+    align-items: center !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.luxury-stat-card:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 24px rgba(58, 38, 25, 0.08) !important;
+}
+
+.luxury-stat-content {
+    position: relative !important;
+    z-index: 2 !important;
+    max-width: 65% !important;
+}
+
+.luxury-stat-top {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+    margin-bottom: 6px !important;
+}
+
+.luxury-stat-icon {
+    width: 44px !important;
+    height: 44px !important;
+    background-color: #351F14 !important;
+    color: #FFFFFF !important;
+    border-radius: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 20px !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 3px 8px rgba(53, 31, 20, 0.2) !important;
+}
+
+.luxury-stat-info {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.luxury-stat-title {
+    color: #7A695E !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    margin-bottom: 3px !important;
+}
+
+.luxury-stat-value {
+    color: #20140D !important;
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.02em !important;
+}
+
+.luxury-stat-trend {
+    font-size: 12px !important;
+    margin-top: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+}
+
+.luxury-stat-trend .trend-up {
+    color: #198754 !important;
+    font-weight: 700 !important;
+}
+
+.luxury-stat-trend .trend-gold {
+    color: #8C5A32 !important;
+    font-weight: 600 !important;
+}
+
+.luxury-stat-trend .trend-pink {
+    color: #D63384 !important;
+    font-weight: 700 !important;
+}
+
+.luxury-stat-trend .trend-sub {
+    color: #8E7E74 !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+}
+
+.luxury-stat-art {
+    position: absolute !important;
+    right: 6px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 100px !important;
+    height: 100px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+}
+
+.luxury-stat-art img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+}
+
+/* Luxury Main Cards (Overview & Order Status) */
+.luxury-main-card {
+    background: #FFFFFF !important;
+    border: 1px solid #EFE6DC !important;
+    border-radius: 18px !important;
+    box-shadow: 0 4px 20px rgba(58, 38, 25, 0.04) !important;
+    padding: 22px 24px !important;
+    position: relative !important;
+}
+
+.luxury-card-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 16px !important;
+}
+
+.overview-toggle-pills {
+    display: inline-flex !important;
+    gap: 4px !important;
+    background: #FAF6F0 !important;
+    padding: 3px !important;
+    border-radius: 10px !important;
+    border: 1px solid #ECE2D5 !important;
+}
+
+.btn-toggle-pill {
+    background: transparent !important;
+    color: #351F14 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 4px 14px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-toggle-pill.active {
+    background: #351F14 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 2px 6px rgba(53, 31, 20, 0.18) !important;
+}
+
+/* Metrics Grid in Overview */
+.metrics-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px 12px !important;
+}
+
+.metric-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 3px !important;
+}
+
+.metric-label {
+    font-size: 12px !important;
+    color: #7A695E !important;
+    font-weight: 500 !important;
+}
+
+.metric-value {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    color: #20140D !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+.metric-badge {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    padding: 2px 8px !important;
+    border-radius: 6px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+}
+
+.badge-sand {
+    background-color: #F7EFE6 !important;
+    color: #8C5A32 !important;
+}
+
+.badge-green {
+    background-color: #E8F5E9 !important;
+    color: #2E7D32 !important;
+}
+
+.badge-neutral {
+    background-color: #F5EFEB !important;
+    color: #5D4037 !important;
+}
+
+/* Custom Chart Legend */
+.custom-chart-legend {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 16px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #351F14 !important;
+}
+
+.legend-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+}
+
+.legend-dot {
+    display: inline-block !important;
+    width: 9px !important;
+    height: 9px !important;
+    border-radius: 50% !important;
+}
+
+/* Order Status Art */
+.order-status-art {
+    position: absolute !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 95px !important;
+    height: auto !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+    opacity: 0.95 !important;
+}
+
+.order-status-art img {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+}
+
+/* ==========================================================================
+   ADMIN BLADE COMPONENTS & PAGE-SPECIFIC STYLES
+   ========================================================================== */
+/* ==========================================================================
+   PAGE: admin / dashboard (resources\views\admin\dashboard.blade.php)
+   ========================================================================== */
+.transition-card {
+            transition: all 0.3s ease;
+        }
+
+        .transition-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, .15) !important;
+        }
+
+        .card .col-6.text-end {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            height: 100%;
+        }
+
+        .card .col-6.text-end>div {
+            width: 120px;
+        }
+
+/* ==========================================================================
+   PAGE: banner / index (resources\views\admin\banner\index.blade.php)
+   ========================================================================== */
+.bg-success-subtle {
+        background-color: #d1fae5 !important;
+    }
+    .bg-danger-subtle {
+        background-color: #fee2e2 !important;
+    }
+    .bg-info-subtle {
+        background-color: #d1e9ff !important;
+    }
+    .rounded-pill {
+        border-radius: 50rem !important;
+    }
+    .fs-xxs {
+        font-size: 0.7rem;
+    }
+    .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+    }
+    .gap-1 {
+        gap: 0.25rem;
+    }
+    .page-link {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        color: #4f5d73;
+        border: 1px solid #e2e8f0;
+        transition: all 0.2s ease;
+    }
+    .page-link:hover {
+        background-color: #f1f5f9;
+        color: #1e293b;
+        border-color: #cbd5e1;
+    }
+    .page-item.active .page-link {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: white;
+    }
+    .page-item.disabled .page-link {
+        color: #94a3b8;
+        background-color: #f8fafc;
+        border-color: #e2e8f0;
+    }
+    .rounded-3 {
+        border-radius: 0.5rem !important;
+    }
+    @media (max-width: 768px) {
+        .table-responsive {
+            font-size: 0.85rem;
+        }
+        .btn-icon {
+            width: 28px;
+            height: 28px;
+        }
+        .fs-5 {
+            font-size: 1rem !important;
+        }
+    }
+
+/* ==========================================================================
+   PAGE: brand / index (resources\views\admin\brand\index.blade.php)
+   ========================================================================== */
+.sortable-ghost {
+            opacity: 0.4;
+            background: #f1f5f9;
+        }
+
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-count-badge {
+            font-weight: 600;
+            font-size: 0.8125rem;
+            letter-spacing: 0.2px;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            display: inline-flex;
+            align-items: center;
+        }
+
+        a:hover .product-count-badge {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+            filter: brightness(0.96);
+        }
+
+/* ==========================================================================
+   PAGE: category / index (resources\views\admin\category\index.blade.php)
+   ========================================================================== */
+/* Force all table cells to be vertically middle aligned */
+        .table.align-middle> :not(caption)>*>* {
+            vertical-align: middle !important;
+        }
+
+        /* Custom pagination styling */
+        .page-link {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            color: #4f5d73;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        .page-link:hover {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border-color: #cbd5e1;
+        }
+
+        .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+
+        .page-item.disabled .page-link {
+            color: #94a3b8;
+            background-color: #f8fafc;
+            border-color: #e2e8f0;
+        }
+
+        /* Badge styling */
+        .bg-success-subtle {
+            background-color: #d1fae5 !important;
+        }
+
+        .bg-danger-subtle {
+            background-color: #fee2e2 !important;
+        }
+
+        .bg-info-subtle {
+            background-color: #d1e9ff !important;
+        }
+
+        .bg-secondary-subtle {
+            background-color: #e9ecef !important;
+        }
+
+        .rounded-pill {
+            border-radius: 50rem !important;
+        }
+
+        .fs-xxs {
+            font-size: 0.7rem;
+        }
+
+        /* Category image wrapper */
+        .category-img-wrapper {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        /* Button icon styling */
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+        }
+
+        .gap-1 {
+            gap: 0.25rem;
+        }
+
+        /* Ensure proper spacing and alignment */
+        .table-custom td,
+        .table-custom th {
+            vertical-align: middle;
+        }
+
+        /* Fix for name column alignment */
+        .table-custom td:not(.text-center) {
+            vertical-align: middle;
+        }
+
+        /* Responsive table handling */
+        @media (max-width: 768px) {
+            .table-responsive {
+                font-size: 0.85rem;
+            }
+
+            .btn-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .fs-5 {
+                font-size: 1rem !important;
+            }
+        }
+
+        .sortable-ghost {
+            opacity: 0.4;
+            background: #f1f5f9;
+        }
+
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+/* ==========================================================================
+   PAGE: coupon / add (resources\views\admin\coupon\add.blade.php)
+   ========================================================================== */
+body{
+    background:#f5f7fb;
+}
+
+/* =========================
+PAGE
+========================= */
+
+.page-header{
+    margin-bottom:24px;
+}
+
+.page-title{
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:4px;
+    color:#111827;
+}
+
+.page-subtitle{
+    color:#6b7280;
+    font-size:14px;
+}
+
+/* =========================
+CARDS
+========================= */
+
+.coupon-card{
+    background:#fff;
+    border-radius:16px;
+    border:1px solid #e5e7eb;
+    box-shadow:0 6px 18px rgba(0,0,0,.04);
+    height:100%;
+    overflow:visible !important;
+}
+
+.coupon-card-header{
+    padding:16px 18px;
+    border-bottom:1px solid #eef2f7;
+    background:#fafafa;
+    border-radius:16px 16px 0 0;
+}
+
+.coupon-card-body{
+    padding:18px;
+    overflow:visible !important;
+}
+
+.section-title{
+    font-size:15px;
+    font-weight:700;
+}
+
+.include-title{
+    color:#4f46e5;
+}
+
+.exclude-title{
+    color:#ef4444;
+}
+
+/* =========================
+FORM
+========================= */
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-label{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+    font-size:14px;
+    font-weight:600;
+    color:#111827;
+}
+
+.form-label small{
+    font-size:11px;
+    font-weight:500;
+    color:#9ca3af !important;
+}
+
+.form-control,
+.form-select{
+    border-radius:10px;
+    border:1px solid #dbe2ea;
+    min-height:48px;
+    font-size:14px;
+    padding:10px 14px;
+    background:#fff;
+}
+
+.form-control::placeholder{
+    color:#9ca3af;
+}
+
+.form-control:focus,
+.form-select:focus{
+    border-color:#4f46e5;
+    box-shadow:0 0 0 3px rgba(79,70,229,.10);
+}
+
+/* =========================
+TOM SELECT
+========================= */
+
+select[multiple]{
+    visibility:hidden;
+}
+
+.ts-wrapper{
+    width:100% !important;
+    visibility:visible !important;
+    position:relative;
+}
+
+.ts-control{
+    border:1px solid #dbe2ea !important;
+    border-radius:10px !important;
+    min-height:48px !important;
+    padding:8px 10px !important;
+    background:#fff !important;
+    box-shadow:none !important;
+}
+
+.ts-control.focus{
+    border-color:#4f46e5 !important;
+    box-shadow:0 0 0 3px rgba(79,70,229,.10) !important;
+}
+
+.ts-wrapper.multi .ts-control > div{
+    background:#eef2ff !important;
+    color:#4f46e5 !important;
+    border-radius:6px !important;
+    padding:4px 8px !important;
+    font-size:13px !important;
+    font-weight:600 !important;
+}
+
+.ts-dropdown{
+    background:#fff !important;
+    border:1px solid #e5e7eb !important;
+    border-radius:10px !important;
+    overflow:hidden !important;
+    z-index:999999 !important;
+    margin-top:6px !important;
+    box-shadow:0 10px 30px rgba(0,0,0,.08) !important;
+}
+
+.ts-dropdown .option{
+    padding:10px 14px !important;
+}
+
+.ts-dropdown .active{
+    background:#eef2ff !important;
+    color:#4f46e5 !important;
+}
+
+.ts-dropdown-content{
+    background:#fff !important;
+}
+
+/* =========================
+BUTTONS
+========================= */
+
+.btn-save{
+    background:linear-gradient(135deg,#4f46e5,#6366f1);
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    padding:12px 24px;
+    font-weight:600;
+}
+
+.btn-save:hover{
+    color:#fff;
+}
+
+.btn-cancel{
+    border-radius:10px;
+    padding:12px 24px;
+    font-weight:600;
+}
+
+/* =========================
+IMPORTANT FIX
+========================= */
+
+.content-page,
+.container-fluid,
+.card,
+.card-body{
+    overflow:visible !important;
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .page-title{
+        font-size:22px;
+    }
+
+    .coupon-card-body{
+        padding:14px;
+    }
+
+}
+
+/* ==========================================================================
+   PAGE: coupon / edit (resources\views\admin\coupon\edit.blade.php)
+   ========================================================================== */
+body{
+    background:#f5f7fb;
+}
+
+/* =========================
+PAGE
+========================= */
+
+.page-header{
+    margin-bottom:24px;
+}
+
+.page-title{
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:4px;
+    color:#111827;
+}
+
+.page-subtitle{
+    color:#6b7280;
+    font-size:14px;
+}
+
+/* =========================
+CARDS
+========================= */
+
+.coupon-card{
+    background:#fff;
+    border-radius:16px;
+    border:1px solid #e5e7eb;
+    box-shadow:0 6px 18px rgba(0,0,0,.04);
+    height:100%;
+    overflow:visible !important;
+}
+
+.coupon-card-header{
+    padding:16px 18px;
+    border-bottom:1px solid #eef2f7;
+    background:#fafafa;
+    border-radius:16px 16px 0 0;
+}
+
+.coupon-card-body{
+    padding:18px;
+    overflow:visible !important;
+}
+
+.section-title{
+    font-size:15px;
+    font-weight:700;
+}
+
+.include-title{
+    color:#4f46e5;
+}
+
+.exclude-title{
+    color:#ef4444;
+}
+
+/* =========================
+FORM
+========================= */
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-label{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+    font-size:14px;
+    font-weight:600;
+    color:#111827;
+}
+
+.form-label small{
+    font-size:11px;
+    font-weight:500;
+    color:#9ca3af !important;
+}
+
+.form-control,
+.form-select{
+    border-radius:10px;
+    border:1px solid #dbe2ea;
+    min-height:48px;
+    font-size:14px;
+    padding:10px 14px;
+    background:#fff;
+}
+
+.form-control::placeholder{
+    color:#9ca3af;
+}
+
+.form-control:focus,
+.form-select:focus{
+    border-color:#4f46e5;
+    box-shadow:0 0 0 3px rgba(79,70,229,.10);
+}
+
+/* =========================
+TOM SELECT
+========================= */
+
+select[multiple]{
+    visibility:hidden;
+}
+
+.ts-wrapper{
+    width:100% !important;
+    visibility:visible !important;
+    position:relative;
+}
+
+.ts-control{
+    border:1px solid #dbe2ea !important;
+    border-radius:10px !important;
+    min-height:48px !important;
+    padding:8px 10px !important;
+    background:#fff !important;
+    box-shadow:none !important;
+}
+
+.ts-control.focus{
+    border-color:#4f46e5 !important;
+    box-shadow:0 0 0 3px rgba(79,70,229,.10) !important;
+}
+
+.ts-wrapper.multi .ts-control > div{
+    background:#eef2ff !important;
+    color:#4f46e5 !important;
+    border-radius:6px !important;
+    padding:4px 8px !important;
+    font-size:13px !important;
+    font-weight:600 !important;
+}
+
+.ts-dropdown{
+    background:#fff !important;
+    border:1px solid #e5e7eb !important;
+    border-radius:10px !important;
+    overflow:hidden !important;
+    z-index:999999 !important;
+    margin-top:6px !important;
+    box-shadow:0 10px 30px rgba(0,0,0,.08) !important;
+}
+
+.ts-dropdown .option{
+    padding:10px 14px !important;
+}
+
+.ts-dropdown .active{
+    background:#eef2ff !important;
+    color:#4f46e5 !important;
+}
+
+.ts-dropdown-content{
+    background:#fff !important;
+}
+
+/* =========================
+BUTTONS
+========================= */
+
+.btn-save{
+    background:linear-gradient(135deg,#4f46e5,#6366f1);
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    padding:12px 24px;
+    font-weight:600;
+}
+
+.btn-save:hover{
+    color:#fff;
+}
+
+.btn-cancel{
+    border-radius:10px;
+    padding:12px 24px;
+    font-weight:600;
+}
+
+/* =========================
+IMPORTANT FIX
+========================= */
+
+.content-page,
+.container-fluid,
+.card,
+.card-body{
+    overflow:visible !important;
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .page-title{
+        font-size:22px;
+    }
+
+    .coupon-card-body{
+        padding:14px;
+    }
+
+}
+
+/* ==========================================================================
+   PAGE: coupon / index (resources\views\admin\coupon\index.blade.php)
+   ========================================================================== */
+.bg-success-subtle {
+            background-color: #d1fae5 !important;
+        }
+
+        .bg-danger-subtle {
+            background-color: #fee2e2 !important;
+        }
+
+        .bg-info-subtle {
+            background-color: #d1e9ff !important;
+        }
+
+        .bg-warning-subtle {
+            background-color: #fff3cd !important;
+        }
+
+        .rounded-pill {
+            border-radius: 50rem !important;
+        }
+
+        .fs-xxs {
+            font-size: 0.7rem;
+        }
+
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+        }
+
+        .gap-1 {
+            gap: 0.25rem;
+        }
+
+        .page-link {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            color: #4f5d73;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        .page-link:hover {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border-color: #cbd5e1;
+        }
+
+        .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+
+        .page-item.disabled .page-link {
+            color: #94a3b8;
+            background-color: #f8fafc;
+            border-color: #e2e8f0;
+        }
+
+        .rounded-3 {
+            border-radius: 0.5rem !important;
+        }
+
+        @media (max-width: 768px) {
+            .table-responsive {
+                font-size: 0.85rem;
+            }
+
+            .btn-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .fs-5 {
+                font-size: 1rem !important;
+            }
+        }
+
+/* ==========================================================================
+   PAGE: gallery / index (resources\views\admin\gallery\index.blade.php)
+   ========================================================================== */
+.bg-success-subtle {
+        background-color: #d1fae5 !important;
+    }
+    .bg-danger-subtle {
+        background-color: #fee2e2 !important;
+    }
+    .bg-info-subtle {
+        background-color: #d1e9ff !important;
+    }
+    .rounded-pill {
+        border-radius: 50rem !important;
+    }
+    .fs-xxs {
+        font-size: 0.7rem;
+    }
+    .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+    }
+    .gap-1 {
+        gap: 0.25rem;
+    }
+    .page-link {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        color: #4f5d73;
+        border: 1px solid #e2e8f0;
+        transition: all 0.2s ease;
+    }
+    .page-link:hover {
+        background-color: #f1f5f9;
+        color: #1e293b;
+        border-color: #cbd5e1;
+    }
+    .page-item.active .page-link {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: white;
+    }
+    .page-item.disabled .page-link {
+        color: #94a3b8;
+        background-color: #f8fafc;
+        border-color: #e2e8f0;
+    }
+    .rounded-3 {
+        border-radius: 0.5rem !important;
+    }
+    @media (max-width: 768px) {
+        .table-responsive {
+            font-size: 0.85rem;
+        }
+        .btn-icon {
+            width: 28px;
+            height: 28px;
+        }
+        .fs-5 {
+            font-size: 1rem !important;
+        }
+    }
+
+/* ==========================================================================
+   PAGE: order / index (resources\views\admin\order\index.blade.php)
+   ========================================================================== */
+.bg-success-subtle {
+            background-color: #d1fae5 !important;
+        }
+
+        .bg-danger-subtle {
+            background-color: #fee2e2 !important;
+        }
+
+        .page-link {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            color: #4f5d73;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 34px;
+            min-height: 34px;
+            border-radius: 0.375rem;
+            background: #fff;
+        }
+
+        .page-link:hover {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border-color: #cbd5e1;
+        }
+
+        .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+
+        .page-item.disabled .page-link {
+            color: #94a3b8;
+            background-color: #f8fafc;
+            border-color: #e2e8f0;
+        }
+
+        .rounded-3 {
+            border-radius: 0.5rem !important;
+        }
+
+        .table> :not(caption)>*>* {
+            padding: 1rem 1rem;
+            vertical-align: middle;
+        }
+
+        .table thead th {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .badge {
+            font-weight: 500;
+            padding: 0.35rem 0.65rem;
+        }
+
+        .table td .ti {
+            opacity: 0.6;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .table-responsive {
+                font-size: 0.85rem;
+            }
+
+            .btn-sm {
+                font-size: 0.75rem;
+            }
+
+            .badge {
+                font-size: 0.7rem;
+            }
+
+            .table> :not(caption)>*>* {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .page-link {
+                min-width: 28px;
+                min-height: 28px;
+                font-size: 0.8rem;
+            }
+        }
+
+/* ==========================================================================
+   PAGE: order / show (resources\views\admin\order\show.blade.php)
+   ========================================================================== */
+.card {
+            border-radius: 12px;
+        }
+
+        .card-header {
+            border-radius: 12px 12px 0 0 !important;
+        }
+
+        .table-hover tbody tr:hover {
+            background: #f8fafc;
+        }
+
+/* ==========================================================================
+   PAGE: product / index (resources\views\admin\product\index.blade.php)
+   ========================================================================== */
+.bg-success-subtle {
+            background-color: #d1fae5 !important;
+        }
+
+        .bg-danger-subtle {
+            background-color: #fee2e2 !important;
+        }
+
+        .rounded-pill {
+            border-radius: 50rem !important;
+        }
+
+        .fs-xxs {
+            font-size: 0.7rem;
+        }
+
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+        }
+
+        .gap-1 {
+            gap: 0.25rem;
+        }
+
+        .page-link {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            color: #4f5d73;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        .page-link:hover {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border-color: #cbd5e1;
+        }
+
+        .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+
+        .page-item.disabled .page-link {
+            color: #94a3b8;
+            background-color: #f8fafc;
+            border-color: #e2e8f0;
+        }
+
+        .rounded-3 {
+            border-radius: 0.5rem !important;
+        }
+
+        @media (max-width: 768px) {
+            .table-responsive {
+                font-size: 0.85rem;
+            }
+
+            .btn-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .fs-5 {
+                font-size: 1rem !important;
+            }
+        }
+
+/* ==========================================================================
+   PAGE: review / index (resources\views\admin\review\index.blade.php)
+   ========================================================================== */
+.bg-success-subtle {
+            background-color: #d1fae5 !important;
+        }
+
+        .bg-warning-subtle {
+            background-color: #fef3c7 !important;
+        }
+
+        .rounded-pill {
+            border-radius: 50rem !important;
+        }
+
+        .fs-xxs {
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .fs-14 {
+            font-size: 14px;
+        }
+
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+        }
+
+        .gap-1 {
+            gap: 0.25rem;
+        }
+
+        .page-link {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            color: #4f5d73;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        .page-link:hover {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border-color: #cbd5e1;
+        }
+
+        .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+
+        .page-item.disabled .page-link {
+            color: #94a3b8;
+            background-color: #f8fafc;
+            border-color: #e2e8f0;
+        }
+
+        .rounded-3 {
+            border-radius: 0.5rem !important;
+        }
+
+        .text-warning {
+            color: #f59e0b !important;
+        }
+
+        .ti-star-filled,
+        .ti-star {
+            font-size: 14px;
+        }
+
+        /* Review text styling */
+        .review-text {
+            line-height: 1.5;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        .review-text p {
+            margin-bottom: 0;
+        }
+
+        .read-more {
+            font-size: 0.75rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        /* Table cell alignment */
+        .table-custom td,
+        .table-custom th {
+            vertical-align: middle;
+        }
+
+        /* Responsive table */
+        @media (max-width: 768px) {
+            .table-responsive {
+                font-size: 0.85rem;
+            }
+
+            .btn-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .fs-5 {
+                font-size: 1rem !important;
+            }
+
+            .table-custom td,
+            .table-custom th {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+
+        /* Hover effect for review images */
+        .review-image:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        /* Badge styling */
+        .badge {
+            font-weight: 500;
+        }
+
+        /* Form labels */
+        .form-label {
+            font-weight: 500;
+        }
+
+/* ==========================================================================
+   PAGE: service / index (resources\views\admin\service\index.blade.php)
+   ========================================================================== */
+.sortable-ghost {
+        opacity: 0.4;
+        background: #f1f5f9;
+    }
+    .drag-handle:active {
+        cursor: grabbing;
+    }
+
+/* ==========================================================================
+   PAGE: slider / index (resources\views\admin\slider\index.blade.php)
+   ========================================================================== */
+.bg-success-subtle {
+        background-color: #d1fae5 !important;
+    }
+    .bg-danger-subtle {
+        background-color: #fee2e2 !important;
+    }
+    .rounded-pill {
+        border-radius: 50rem !important;
+    }
+    .fs-xxs {
+        font-size: 0.7rem;
+    }
+    .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+    }
+    .gap-1 {
+        gap: 0.25rem;
+    }
+    .page-link {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        color: #4f5d73;
+        border: 1px solid #e2e8f0;
+        transition: all 0.2s ease;
+    }
+    .page-link:hover {
+        background-color: #f1f5f9;
+        color: #1e293b;
+        border-color: #cbd5e1;
+    }
+    .page-item.active .page-link {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: white;
+    }
+    .page-item.disabled .page-link {
+        color: #94a3b8;
+        background-color: #f8fafc;
+        border-color: #e2e8f0;
+    }
+    .rounded-3 {
+        border-radius: 0.5rem !important;
+    }
+    @media (max-width: 768px) {
+        .table-responsive {
+            font-size: 0.85rem;
+        }
+        .btn-icon {
+            width: 28px;
+            height: 28px;
+        }
+        .fs-5 {
+            font-size: 1rem !important;
+        }
+    }
+
+/* ==========================================================================
+   PAGE: subcategory / index (resources\views\admin\subcategory\index.blade.php)
+   ========================================================================== */
+.bg-success-subtle {
+            background-color: #d1fae5 !important;
+        }
+
+        .bg-danger-subtle {
+            background-color: #fee2e2 !important;
+        }
+
+        .rounded-pill {
+            border-radius: 50rem !important;
+        }
+
+        .fs-xxs {
+            font-size: 0.7rem;
+        }
+
+        .category-img-wrapper {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table-centered th,
+        .table-centered td {
+            vertical-align: middle;
+        }
+
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+        }
+
+        .gap-1 {
+            gap: 0.25rem;
+        }
+
+        /* RESPONSIVE FILTERS - AUTO WIDTH, NATURAL WRAPPING */
+        .filters-responsive {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 1rem;
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+            min-width: 140px;
+        }
+
+        /* Search field - takes more space but still responsive */
+        .filter-search {
+            flex: 2 1 200px;
+            min-width: 160px;
+        }
+
+        /* Category field */
+        .filter-category {
+            flex: 1.5 1 160px;
+            min-width: 150px;
+        }
+
+        /* Status field */
+        .filter-status {
+            flex: 1 1 120px;
+            min-width: 120px;
+        }
+
+        /* Buttons container - doesn't grow unnecessarily */
+        .filter-buttons {
+            flex: 0 1 auto;
+            min-width: auto;
+        }
+
+        /* Label spacing for buttons on larger screens */
+        .filter-buttons .form-label {
+            visibility: hidden;
+            height: 0;
+            margin-bottom: 0;
+        }
+
+        /* On smaller screens, remove hidden label space */
+        @media (max-width: 767.98px) {
+            .filter-buttons .form-label.d-none {
+                display: none !important;
+            }
+        }
+
+        /* Make buttons consistent width on mobile */
+        @media (max-width: 575.98px) {
+            .filters-responsive {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-item {
+                width: 100%;
+            }
+
+            .filter-buttons .d-flex {
+                width: 100%;
+            }
+
+            .filter-buttons .btn {
+                flex: 1;
+            }
+        }
+
+        /* For tablets, adjust layout */
+        @media (min-width: 576px) and (max-width: 991.98px) {
+            .filter-search {
+                flex: 3 1 200px;
+            }
+
+            .filter-category {
+                flex: 2 1 160px;
+            }
+
+            .filter-status {
+                flex: 1 1 120px;
+            }
+
+            .filter-buttons .btn {
+                padding: 0.375rem 0.75rem;
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Custom pagination styling */
+        .page-link {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            color: #4f5d73;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        .page-link:hover {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border-color: #cbd5e1;
+        }
+
+        .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+
+        .page-item.disabled .page-link {
+            color: #94a3b8;
+            background-color: #f8fafc;
+            border-color: #e2e8f0;
+        }
+
+        .rounded-3 {
+            border-radius: 0.5rem !important;
+        }
+
+        /* Make table column widths auto-adjust properly */
+        .table-responsive .table {
+            width: 100%;
+            min-width: 600px;
+        }
+
+        .table-responsive .table th,
+        .table-responsive .table td {
+            white-space: nowrap;
+        }
+
+        /* For proper wrapping on smaller screens */
+        @media (max-width: 768px) {
+            .table-responsive .table td {
+                white-space: normal;
+                word-break: break-word;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .table-responsive {
+                font-size: 0.85rem;
+            }
+
+            .btn-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .fs-5 {
+                font-size: 1rem !important;
+            }
+
+        }
+
+/* ==========================================================================
+   PAGE: user / customers (resources\views\admin\user\customers.blade.php)
+   ========================================================================== */
+.bg-success-subtle {
+        background-color: #d1fae5 !important;
+    }
+    .bg-danger-subtle {
+        background-color: #fee2e2 !important;
+    }
+    .rounded-pill {
+        border-radius: 50rem !important;
+    }
+    .fs-xxs {
+        font-size: 0.7rem;
+    }
+    .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+    }
+    .gap-1 {
+        gap: 0.25rem;
+    }
+    .table-centered th,
+    .table-centered td {
+        vertical-align: middle;
+    }
+
+/* ==========================================================================
+   PAGE: user / index (resources\views\admin\user\index.blade.php)
+   ========================================================================== */
+/* Status Badge Colors */
+    .bg-success-subtle {
+        background-color: #d1fae5 !important;
+    }
+    .bg-danger-subtle {
+        background-color: #fee2e2 !important;
+    }
+    
+    /* Utility Classes */
+    .rounded-pill {
+        border-radius: 50rem !important;
+    }
+    .fs-xxs {
+        font-size: 0.7rem;
+    }
+    
+    /* Button Icon */
+    .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+    }
+    .gap-1 {
+        gap: 0.25rem;
+    }
+    
+    /* Table */
+    .table-centered th,
+    .table-centered td {
+        vertical-align: middle;
+    }
+    
+    /* Filters */
+    .filters-responsive {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        gap: 1rem;
+    }
+    .filter-item {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-width: 140px;
+    }
+    .filter-search {
+        flex: 2 1 200px;
+        min-width: 160px;
+    }
+    .filter-role {
+        flex: 1.5 1 160px;
+        min-width: 150px;
+    }
+    .filter-status {
+        flex: 1 1 120px;
+        min-width: 120px;
+    }
+    .filter-buttons {
+        flex: 0 1 auto;
+        min-width: auto;
+    }
+    .filter-buttons .form-label {
+        visibility: hidden;
+        height: 0;
+        margin-bottom: 0;
+    }
+    
+    /* Avatar */
+    .avatar-placeholder {
+        font-size: 16px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    
+    /* ===== PAGINATION FIXED STYLES ===== */
+    .pagination {
+        --bs-pagination-color: #0d6efd;
+        --bs-pagination-bg: transparent;
+        --bs-pagination-border-color: #dee2e6;
+        --bs-pagination-hover-color: #0a58ca;
+        --bs-pagination-hover-bg: #e9ecef;
+        --bs-pagination-hover-border-color: #dee2e6;
+        --bs-pagination-active-color: #fff;
+        --bs-pagination-active-bg: #0d6efd;
+        --bs-pagination-active-border-color: #0d6efd;
+        --bs-pagination-disabled-color: #6c757d;
+        --bs-pagination-disabled-bg: transparent;
+        --bs-pagination-disabled-border-color: #dee2e6;
+        gap: 4px;
+        flex-wrap: wrap;
+    }
+    
+    .pagination .page-item {
+        margin: 0;
+    }
+    
+    .pagination .page-link {
+        border-radius: 6px !important;
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        min-width: 34px;
+        text-align: center;
+        border: 1px solid #dee2e6;
+        background: #fff;
+        color: #0d6efd;
+        transition: all 0.2s ease;
+    }
+    
+    .pagination .page-item:first-child .page-link,
+    .pagination .page-item:last-child .page-link {
+        border-radius: 6px !important;
+    }
+    
+    .pagination .page-item.active .page-link {
+        background: #0d6efd;
+        border-color: #0d6efd;
+        color: #fff;
+        box-shadow: 0 2px 6px rgba(13, 110, 253, 0.3);
+    }
+    
+    .pagination .page-item:not(.active):not(.disabled) .page-link:hover {
+        background: #f8f9fa;
+        border-color: #0d6efd;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+    
+    .pagination .page-item.disabled .page-link {
+        background: #f8f9fa;
+        color: #6c757d;
+        opacity: 0.6;
+    }
+    
+    /* Responsive Pagination */
+    @media (max-width: 575.98px) {
+        .pagination .page-link {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            min-width: 28px;
+        }
+        .pagination {
+            gap: 2px;
+        }
+    }
+    
+    /* Filters Responsive */
+    @media (max-width: 575.98px) {
+        .filters-responsive {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .filter-item {
+            width: 100%;
+        }
+        .filter-buttons .d-flex {
+            width: 100%;
+        }
+        .filter-buttons .btn {
+            flex: 1;
+        }
+    }
+

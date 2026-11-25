@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+    <defs>
+        <radialGradient id="reviewGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#F2D3A8" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#E8BA82" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="goldStar" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFF2D6"/>
+            <stop offset="35%" stop-color="#F5C06A"/>
+            <stop offset="70%" stop-color="#CF8B2E"/>
+            <stop offset="100%" stop-color="#804D15"/>
+        </linearGradient>
+        <linearGradient id="pedestalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#4A2E19"/>
+            <stop offset="40%" stop-color="#B3804A"/>
+            <stop offset="70%" stop-color="#E8CDA0"/>
+            <stop offset="100%" stop-color="#5C3B24"/>
+        </linearGradient>
+        <filter id="trophyShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#351F14" flood-opacity="0.2"/>
+        </filter>
+    </defs>
+    <!-- Background Glow -->
+    <circle cx="68" cy="65" r="48" fill="url(#reviewGlow)"/>
+
+    <g filter="url(#trophyShadow)">
+        <!-- Pedestal / Base -->
+        <rect x="52" y="94" width="34" height="8" rx="2" fill="url(#pedestalGrad)"/>
+        <path d="M56 94 L63 84 L75 84 L82 94 Z" fill="url(#pedestalGrad)"/>
+        <!-- Stem -->
+        <rect x="66" y="68" width="6" height="18" rx="2" fill="url(#pedestalGrad)"/>
+
+        <!-- Large Gleaming Golden Star -->
+        <g transform="translate(69, 44)">
+            <polygon points="0,-26 7,-8 26,-7 11,5 17,23 0,12 -17,23 -11,5 -26,-7 -7,-8" fill="url(#goldStar)"/>
+            <!-- Inner Facet Highlights -->
+            <polygon points="0,-26 0,0 7,-8" fill="#FFF8EB" fill-opacity="0.6"/>
+            <polygon points="26,-7 0,0 11,5" fill="#FFF8EB" fill-opacity="0.4"/>
+            <polygon points="17,23 0,0 0,12" fill="#FFF8EB" fill-opacity="0.5"/>
+            <polygon points="-17,23 0,0 -11,5" fill="#693C0C" fill-opacity="0.3"/>
+            <polygon points="-26,-7 0,0 -7,-8" fill="#693C0C" fill-opacity="0.25"/>
+        </g>
+
+        <!-- Laurel Leaves / Accents -->
+        <path d="M46 72 C42 64, 46 54, 52 48" stroke="#D4A373" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <path d="M92 72 C96 64, 92 54, 86 48" stroke="#D4A373" stroke-width="2" stroke-linecap="round" fill="none"/>
+    </g>
+
+    <!-- Sparkles -->
+    <path d="M40 32 Q40 36 43 36 Q40 36 40 40 Q40 36 37 36 Q40 36 40 32 Z" fill="#FFE2B0"/>
+    <path d="M96 26 Q96 29 98 29 Q96 29 96 32 Q96 29 94 29 Q96 29 96 26 Z" fill="#E8CDA0"/>
+</svg>
+

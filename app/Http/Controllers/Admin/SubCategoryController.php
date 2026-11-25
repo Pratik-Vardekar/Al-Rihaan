@@ -1,0 +1,431 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Admin\Concerns\HandlesCsv;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\SubCategory;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+class SubCategoryController extends Controller
+{
+    use HandlesCsv;
+
+    private function subcategoryExportHeaders(): array
+    {
+        return ['Category', 'Name', 'Slug', 'Status'];
+    }
+    public function index(Request $request)
+    {
+        $query = SubCategory::with('category');
+
+        // Search - NOW INCLUDES CATEGORY NAME SEARCH
+        if ($request->search) {
+
+            $query->where(function ($q) use ($request) {
+
+                $q->where('name', 'LIKE', '%' . $request->search . '%')
+                    ->orWhere('slug', 'LIKE', '%' . $request->search . '%')
+                    ->orWhereHas('category', function ($catQuery) use ($request) {
+                        $catQuery->where('name', 'LIKE', '%' . $request->search . '%');
+                    });
+            });
+        }
+
+        // Category Filter
+        if ($request->category_id) {
+
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Status Filter
+        if ($request->status !== null && $request->status !== '') {
+
+            $query->where('status', $request->status);
+        }
+
+        // Date Filter
+        if ($request->date) {
+
+            $query->whereDate('created_at', $request->date);
+        }
+
+        // Changed pagination from 30 to 10
+        $subcategories = $query
+            ->latest()
+            ->paginate(10);
+
+        $categories = Category::where('status', 1)->get();
+
+        return view(
+            'admin.subcategory.index',
+            compact('subcategories', 'categories')
+        );
+    }
+
+    public function export(Request $request)
+    {
+        $query = SubCategory::with('category');
+
+        // Search - NOW INCLUDES CATEGORY NAME SEARCH FOR EXPORT AS WELL
+        if ($request->search) {
+
+            $query->where(function ($q) use ($request) {
+
+                $q->where('name', 'LIKE', '%' . $request->search . '%')
+                    ->orWhere('slug', 'LIKE', '%' . $request->search . '%')
+                    ->orWhereHas('category', function ($catQuery) use ($request) {
+                        $catQuery->where('name', 'LIKE', '%' . $request->search . '%');
+                    });
+            });
+        }
+
+        // Category Filter
+        if ($request->category_id) {
+
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Status Filter
+        if ($request->status !== null && $request->status !== '') {
+
+            $query->where('status', $request->status);
+        }
+
+        // Date Filter
+        if ($request->date) {
+
+            $query->whereDate('created_at', $request->date);
+        }
+
+        $subcategories = $query->latest()->get();
+
+        $fileName = 'subcategories.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=$fileName",
+        ];
+
+        $callback = function () use ($subcategories) {
+
+            $file = fopen('php://output', 'w');
+
+            fputcsv($file, [
+                'ID',
+                'Category',
+                'Name',
+                'Slug',
+                'Status',
+                'Created At'
+            ]);
+
+            foreach ($subcategories as $subcategory) {
+
+                fputcsv($file, [
+                    $subcategory->id,
+                    $subcategory->category->name ?? '-',
+                    $subcategory->name,
+                    $subcategory->slug,
+                    $subcategory->status == 1 ? 'Active' : 'Inactive',
+                    $subcategory->created_at->format('d-m-Y'),
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    public function importSample()
+    {
+        return $this->streamCsvDownload('subcategories_import_sample.csv', $this->subcategoryExportHeaders(), function ($file) {
+            fputcsv($file, ['Seeds', 'Vegetable Seeds', 'vegetable-seeds', 'Active']);
+            fputcsv($file, ['Seeds', 'Flower Seeds', 'flower-seeds', 'Active']);
+        });
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:csv,txt|max:5120',
+        ]);
+
+        $parsed = $this->parseCsvFile($request->file('file'));
+
+        if (empty($parsed['rows'])) {
+            return back()->with('error', 'CSV file is empty or invalid.');
+        }
+
+        $imported = 0;
+        $updated = 0;
+        $errors = [];
+
+        foreach ($parsed['rows'] as $index => $row) {
+            $rowNumber = $index + 2;
+
+            try {
+                $categoryName = $this->csvValue($row, 'category');
+                $name = $this->csvValue($row, 'name');
+
+                if (!$categoryName || !$name) {
+                    throw new \RuntimeException("Row {$rowNumber}: Category and Name are required.");
+                }
+
+                $category = Category::where(function ($q) use ($categoryName) {
+                    $q->where('name', $categoryName)
+                        ->orWhere('slug', Str::slug($categoryName));
+                })->first();
+
+                if (!$category) {
+                    throw new \RuntimeException("Row {$rowNumber}: category '{$categoryName}' not found.");
+                }
+
+                $slug = $this->csvValue($row, 'slug') ?: Str::slug($name);
+                $status = $this->normalizeStatusValue($this->csvValue($row, 'status'), 1);
+
+                $existing = SubCategory::where('slug', $slug)->first();
+                if ($existing) {
+                    $existing->update([
+                        'category_id' => $category->id,
+                        'name' => $name,
+                        'status' => $status,
+                    ]);
+                    $updated++;
+                } else {
+                    SubCategory::create([
+                        'category_id' => $category->id,
+                        'name' => $name,
+                        'slug' => $slug,
+                        'status' => $status,
+                    ]);
+                    $imported++;
+                }
+            } catch (\Throwable $e) {
+                $errors[] = $e->getMessage();
+            }
+        }
+
+        return redirect()
+            ->route('subcategory.index')
+            ->with('success', "Import complete: {$imported} created, {$updated} updated.")
+            ->with('import_errors', $errors);
+    }
+
+    public function create(Request $request)
+    {
+        $categories = Category::where('status', 1)->get();
+
+        // Pass the current page and filters to the create view
+        return view('admin.subcategory.add', compact('categories'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'category_id'      => 'required',
+            'name'             => 'required',
+            'slug'             => 'required|unique:sub_categories,slug',
+            'image'            => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'status'           => 'required',
+            'show_in_explore'  => 'nullable|in:0,1',
+        ]);
+
+        $showInExplore = (int) $request->input('show_in_explore', 0);
+        if ($error = $this->exploreMenuLimitError($showInExplore)) {
+            return back()->withErrors(['show_in_explore' => $error])->withInput();
+        }
+
+        $imageName = null;
+
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $this->saveSubCategoryImage($request->file('image'), $imageName);
+        }
+
+        SubCategory::create([
+            'category_id'     => $request->category_id,
+            'name'            => $request->name,
+            'slug'            => Str::slug($request->slug),
+            'image'           => $imageName,
+            'status'          => $request->status,
+            'show_in_explore' => $showInExplore,
+        ]);
+
+        // Build query parameters to preserve page and filters
+        $queryParams = [];
+        if ($request->page) $queryParams['page'] = $request->page;
+        if ($request->search) $queryParams['search'] = $request->search;
+        if ($request->category_id) $queryParams['category_id'] = $request->category_id;
+        if ($request->status) $queryParams['status'] = $request->status;
+        if ($request->date) $queryParams['date'] = $request->date;
+
+        return redirect()
+            ->route('subcategory.index', $queryParams)
+            ->with('success', 'Sub Category Added Successfully');
+    }
+
+    public function edit(SubCategory $subcategory, Request $request)
+    {
+        $categories = Category::where('status', 1)->get();
+
+        return view(
+            'admin.subcategory.edit',
+            compact('subcategory', 'categories')
+        );
+    }
+
+    public function update(Request $request, SubCategory $subcategory)
+    {
+        $request->validate([
+            'category_id'      => 'required',
+            'name'             => 'required',
+            'slug'             => 'required|unique:sub_categories,slug,' . $subcategory->id,
+            'image'            => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'status'           => 'required',
+            'show_in_explore'  => 'nullable|in:0,1',
+        ]);
+
+        $showInExplore = (int) $request->input('show_in_explore', 0);
+        if ($error = $this->exploreMenuLimitError($showInExplore, $subcategory->id)) {
+            return back()->withErrors(['show_in_explore' => $error])->withInput();
+        }
+
+        $imageName = $subcategory->image;
+
+        if ($request->hasFile('image')) {
+            $this->deleteSubCategoryImage($subcategory->image);
+            $imageName = time() . '.' . $request->image->extension();
+            $this->saveSubCategoryImage($request->file('image'), $imageName);
+        }
+
+        $subcategory->update([
+            'category_id'     => $request->category_id,
+            'name'            => $request->name,
+            'slug'            => Str::slug($request->slug),
+            'image'           => $imageName,
+            'status'          => $request->status,
+            'show_in_explore' => $showInExplore,
+        ]);
+
+        // Build query parameters to preserve page and filters
+        $queryParams = [];
+        if ($request->page) $queryParams['page'] = $request->page;
+        if ($request->search) $queryParams['search'] = $request->search;
+        if ($request->category_id) $queryParams['category_id'] = $request->category_id;
+        if ($request->status) $queryParams['status'] = $request->status;
+        if ($request->date) $queryParams['date'] = $request->date;
+
+        return redirect()
+            ->route('subcategory.index', $queryParams)
+            ->with('success', 'Sub Category Updated Successfully');
+    }
+
+    public function destroy(SubCategory $subcategory, Request $request)
+    {
+        $this->deleteSubCategoryImage($subcategory->image);
+
+        $subcategory->delete();
+
+        // Build query parameters to preserve page and filters
+        $queryParams = [];
+        if ($request->page) $queryParams['page'] = $request->page;
+        if ($request->search) $queryParams['search'] = $request->search;
+        if ($request->category_id) $queryParams['category_id'] = $request->category_id;
+        if ($request->status) $queryParams['status'] = $request->status;
+        if ($request->date) $queryParams['date'] = $request->date;
+
+        return redirect()
+            ->route('subcategory.index', $queryParams)
+            ->with('success', 'Sub Category Deleted Successfully');
+    }
+
+    /**
+     * Helper to save subcategory image to public and base paths.
+     */
+    protected function saveSubCategoryImage($file, string $imageName): void
+    {
+        $publicDir = public_path('backend/assets/images/subcategory');
+        $baseDir   = base_path('backend/assets/images/subcategory');
+
+        if (! file_exists($publicDir)) {
+            @mkdir($publicDir, 0755, true);
+        }
+        if (! file_exists($baseDir)) {
+            @mkdir($baseDir, 0755, true);
+        }
+
+        $file->move($publicDir, $imageName);
+
+        $publicFile = $publicDir . DIRECTORY_SEPARATOR . $imageName;
+        $baseFile   = $baseDir . DIRECTORY_SEPARATOR . $imageName;
+
+        if (file_exists($publicFile) && ! file_exists($baseFile)) {
+            @copy($publicFile, $baseFile);
+        }
+    }
+
+    /**
+     * Helper to delete subcategory image from disk.
+     */
+    protected function deleteSubCategoryImage(?string $imageName): void
+    {
+        if (empty($imageName)) {
+            return;
+        }
+
+        $clean = ltrim(str_replace('\\', '/', $imageName), '/');
+        $relative = str_starts_with($clean, 'backend/') ? $clean : 'backend/assets/images/subcategory/' . $clean;
+
+        $publicFile = public_path($relative);
+        $baseFile   = base_path($relative);
+
+        if (file_exists($publicFile) && is_file($publicFile)) {
+            @unlink($publicFile);
+        }
+        if (file_exists($baseFile) && is_file($baseFile)) {
+            @unlink($baseFile);
+        }
+    }
+
+    public function status($id, Request $request)
+    {
+        $subcategory = SubCategory::findOrFail($id);
+
+        $subcategory->status = $subcategory->status == 1 ? 0 : 1;
+
+        $subcategory->save();
+
+        // Build query parameters to preserve page and filters
+        $queryParams = [];
+        if ($request->page) $queryParams['page'] = $request->page;
+        if ($request->search) $queryParams['search'] = $request->search;
+        if ($request->category_id) $queryParams['category_id'] = $request->category_id;
+        if ($request->status) $queryParams['status'] = $request->status;
+        if ($request->date) $queryParams['date'] = $request->date;
+
+        return redirect()
+            ->route('subcategory.index', $queryParams)
+            ->with('success', 'Sub category status updated successfully');
+    }
+
+    private function exploreMenuLimitError(int $showInExplore, ?int $ignoreId = null): ?string
+    {
+        if ($showInExplore !== 1) {
+            return null;
+        }
+
+        $enabledCount = SubCategory::where('show_in_explore', 1)
+            ->when($ignoreId, fn($query) => $query->where('id', '!=', $ignoreId))
+            ->count();
+
+        if ($enabledCount >= SubCategory::EXPLORE_MENU_LIMIT) {
+            return 'Only ' . SubCategory::EXPLORE_MENU_LIMIT . ' subcategories can be shown in the Explore menu. Uncheck another one first.';
+        }
+
+        return null;
+    }
+}
